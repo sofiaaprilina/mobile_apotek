@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "924944034633",
+    "project_id": "apotekproject-8adea",
+    "storage_bucket": "apotekproject-8adea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924944034633:android:f804b15a003ac91acbc898",
+        "android_client_info": {
+          "package_name": "com.example.projek_uas_apotek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924944034633-430b3mk8fn8keq5147i3p6vj5jpkt09f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.projek_uas_apotek",
+            "certificate_hash": "3d49abeaaa60fc80748a4228bee99045763b28e6"
+          }
+        },
+        {
+          "client_id": "924944034633-b03faspo4ms6i3qh2dmihlr2iq7r20t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvQXOWZQWQCLiYhfvoAdYbRs2iPBkCplE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924944034633-b03faspo4ms6i3qh2dmihlr2iq7r20t9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
