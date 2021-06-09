@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projek_uas_apotek/obat/list_obat.dart';
 import 'package:projek_uas_apotek/pages/kategori.dart';
 import 'color.dart';
 import 'login_page.dart';
@@ -120,7 +121,15 @@ class FirstScreen extends StatelessWidget {
                                   ),
                                   Text("Obat")
                                 ],),
-                                onTap: (){},
+                                onTap: (){
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return ListObat();
+                                      },
+                                    ),
+                                  );
+                                },
                               ),
                               InkResponse(
                                 child: Column(children: [

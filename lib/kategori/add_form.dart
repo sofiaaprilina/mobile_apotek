@@ -43,9 +43,9 @@ class _AddFormState extends State<AddForm> {
               children: [
                 SizedBox(height: 24.0),
                 Text(
-                  'name',
+                  'Nama Kategori',
                   style: TextStyle(
-                    color: ColorPalette.hintColor,
+                    color: Colors.white,
                     fontSize: 22.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
@@ -62,13 +62,13 @@ class _AddFormState extends State<AddForm> {
                     value: value,
                   ),
                   label: 'name',
-                  hint: 'Enter your note name',
+                  hint: 'Enter name category here',
                 ),
                 SizedBox(height: 24.0),
                 Text(
-                  'Description',
+                  'Deskripsi',
                   style: TextStyle(
-                    color: ColorPalette.hintColor,
+                    color: Colors.white,
                     fontSize: 22.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
@@ -86,7 +86,7 @@ class _AddFormState extends State<AddForm> {
                     value: value,
                   ),
                   label: 'Description',
-                  hint: 'Enter your note description',
+                  hint: 'Enter description of category here',
                 ),
               ],
             ),
@@ -141,7 +141,7 @@ class _AddFormState extends State<AddForm> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: ColorPalette.hintColor,
+                          color: Colors.white,
                           letterSpacing: 2,
                         ),
                       ),

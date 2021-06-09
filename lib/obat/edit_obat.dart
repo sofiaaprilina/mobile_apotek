@@ -4,13 +4,19 @@ import 'database.dart';
 import 'edit_form.dart';
 
 class EditScreen extends StatefulWidget {
+  final String currentKode;
   final String currentName;
-  final String currentDescription;
+  final String currentJenis;
+  final int currentHarga;
+  final int currentStok;
   final String documentId;
 
   EditScreen({
+    this.currentKode,
     this.currentName,
-    this.currentDescription,
+    this.currentJenis,
+    this.currentHarga,
+    this.currentStok,
     this.documentId,
   });
 
@@ -19,9 +25,11 @@ class EditScreen extends StatefulWidget {
 }
 
 class _EditScreenState extends State<EditScreen> {
+  final FocusNode _kodeFocusNode = FocusNode();
   final FocusNode _nameFocusNode = FocusNode();
-
-  final FocusNode _descriptionFocusNode = FocusNode();
+  final FocusNode _jenisFocusNode = FocusNode();
+  final FocusNode _hargaFocusNode = FocusNode();
+  final FocusNode _stokFocusNode = FocusNode();
 
   bool _isDeleting = false;
 
@@ -29,8 +37,11 @@ class _EditScreenState extends State<EditScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        _kodeFocusNode.unfocus();
         _nameFocusNode.unfocus();
-        _descriptionFocusNode.unfocus();
+        _jenisFocusNode.unfocus();
+        _hargaFocusNode.unfocus();
+        _stokFocusNode.unfocus();
       },
       child: Scaffold(
         backgroundColor: ColorPalette.primaryDarkColor,
@@ -43,12 +54,12 @@ class _EditScreenState extends State<EditScreen> {
       children: [
         Image(
           image: NetworkImage(
-             "https://image.flaticon.com/icons/png/512/2911/2911700.png"),
+             "https://image.flaticon.com/icons/png/512/822/822092.png"),
           width: 25.0,
         ),
         SizedBox(width: 8),
         Text(
-          'Edit Kategori',
+          'Edit Data Obat',
           style: TextStyle(
             color: Colors.white,
             fontSize: 18,
@@ -104,10 +115,16 @@ class _EditScreenState extends State<EditScreen> {
             ),
             child: EditItemForm(
               documentId: widget.documentId,
+              kodeFocusNode: _kodeFocusNode,
               nameFocusNode: _nameFocusNode,
-              descriptionFocusNode: _descriptionFocusNode,
+              jenisFocusNode: _jenisFocusNode,
+              hargaFocusNode: _hargaFocusNode,
+              stokFocusNode: _stokFocusNode,
+              currentKode: widget.currentKode,
               currentName: widget.currentName,
-              currentDescription: widget.currentDescription,
+              currentJenis: widget.currentJenis,
+              currentHarga: widget.currentHarga,
+              currentStok: widget.currentStok,
             ),
           ),
         ),

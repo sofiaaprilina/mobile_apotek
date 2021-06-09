@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '/login/color.dart';
-import 'edit_kategori.dart';
+import 'edit_obat.dart';
 import 'database.dart';
 
-class ItemKategori extends StatelessWidget {
+class ItemObat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -19,8 +19,11 @@ class ItemKategori extends StatelessWidget {
             itemBuilder: (context, index) {
               var noteInfo = snapshot.data.docs[index].data();
               String docID = snapshot.data.docs[index].id;
+              String kode = noteInfo['kode'];
               String name = noteInfo['name'];
-              String description = noteInfo['description'];
+              String jenis = noteInfo['jenis'];
+              int harga = noteInfo['harga'];
+              int stok = noteInfo['stok'];
 
               return Ink(
                 decoration: BoxDecoration(
@@ -34,22 +37,39 @@ class ItemKategori extends StatelessWidget {
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => EditScreen(
+                        currentKode: kode,
                         currentName: name,
-                        currentDescription: description,
+                        currentJenis: jenis,
+                        currentHarga: harga,
+                        currentStok: stok,
                         documentId: docID,
                       ),
                     ),
                   ),
-                  leading: Image(image: NetworkImage("https://image.flaticon.com/icons/png/512/914/914832.png"),),
+                  leading: Image(image: NetworkImage("https://image.flaticon.com/icons/png/512/822/822092.png"),),
                   title: Text(
                     name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  subtitle: Text(
-                    description,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  subtitle: Column(
+                    children: [
+                      Text(
+                        "Jenis : " + jenis,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        "Harga : " + harga.toString(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        "Stok : " + stok.toString(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
                 ),
               );

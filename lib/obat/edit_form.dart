@@ -7,17 +7,29 @@ import '/utils/validator.dart';
 import 'custom_form_field.dart';
 
 class EditItemForm extends StatefulWidget {
+  final FocusNode kodeFocusNode;
   final FocusNode nameFocusNode;
-  final FocusNode descriptionFocusNode;
+  final FocusNode jenisFocusNode;
+  final FocusNode hargaFocusNode;
+  final FocusNode stokFocusNode;
+  final String currentKode;
   final String currentName;
-  final String currentDescription;
+  final String currentJenis;
+  final int currentHarga;
+  final int currentStok;
   final String documentId;
 
   const EditItemForm({
+    this.kodeFocusNode,
     this.nameFocusNode,
-    this.descriptionFocusNode,
+    this.jenisFocusNode,
+    this.hargaFocusNode,
+    this.stokFocusNode,
+    this.currentKode,
     this.currentName,
-    this.currentDescription,
+    this.currentJenis,
+    this.currentHarga,
+    this.currentStok,
     this.documentId,
   });
 
@@ -30,17 +42,32 @@ class _EditItemFormState extends State<EditItemForm> {
 
   bool _isProcessing = false;
 
+  TextEditingController _kodeController;
   TextEditingController _nameController;
-  TextEditingController _descriptionController;
+  TextEditingController _jenisController;
+  TextEditingController _hargaController;
+  TextEditingController _stokController;
 
   @override
   void initState() {
+    _kodeController = TextEditingController(
+      text: widget.currentKode
+    );
+    
     _nameController = TextEditingController(
       text: widget.currentName,
     );
 
-    _descriptionController = TextEditingController(
-      text: widget.currentDescription,
+    _jenisController = TextEditingController(
+      text: widget.currentJenis,
+    );
+
+    _hargaController = TextEditingController(
+      text: widget.currentHarga.toString(),
+    );
+
+    _stokController = TextEditingController(
+      text: widget.currentStok.toString(),
     );
     super.initState();
   }
@@ -60,9 +87,9 @@ class _EditItemFormState extends State<EditItemForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 24.0),
+                SizedBox(height: 10.0),
                 Text(
-                  'Nama Kategori',
+                  'Kode Obat',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22.0,
@@ -70,7 +97,30 @@ class _EditItemFormState extends State<EditItemForm> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8.0),
+                SizedBox(height: 10.0),
+                CustomFormField(
+                  isLabelEnabled: false,
+                  controller: _kodeController,
+                  focusNode: widget.kodeFocusNode,
+                  keyboardType: TextInputType.text,
+                  inputAction: TextInputAction.next,
+                  validator: (value) => Validator.validateField(
+                    value: value,
+                  ),
+                  label: 'kode',
+                  hint: 'Masukkan kode obat',
+                ),
+                SizedBox(height: 10.0),
+                Text(
+                  'Nama Obat',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22.0,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 10.0),
                 CustomFormField(
                   isLabelEnabled: false,
                   controller: _nameController,
@@ -81,11 +131,12 @@ class _EditItemFormState extends State<EditItemForm> {
                     value: value,
                   ),
                   label: 'name',
-                  hint: 'Enter your category name',
+                  hint: 'Masukkan nama obat',
                 ),
-                SizedBox(height: 24.0),
+                SizedBox(height: 10.0),
+                SizedBox(height: 10.0),
                 Text(
-                  'Deskripsi',
+                  'Jenis Obat',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22.0,
@@ -93,19 +144,64 @@ class _EditItemFormState extends State<EditItemForm> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8.0),
+                SizedBox(height: 10.0),
                 CustomFormField(
-                  maxLines: 10,
                   isLabelEnabled: false,
-                  controller: _descriptionController,
-                  focusNode: widget.descriptionFocusNode,
+                  controller: _jenisController,
+                  focusNode: widget.jenisFocusNode,
                   keyboardType: TextInputType.text,
-                  inputAction: TextInputAction.done,
+                  inputAction: TextInputAction.next,
                   validator: (value) => Validator.validateField(
                     value: value,
                   ),
-                  label: 'Description',
-                  hint: 'Enter your note description',
+                  label: 'jenis',
+                  hint: 'Pilih jenis obat',
+                ),
+                SizedBox(height: 10.0),
+                Text(
+                  'Harga Obat',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22.0,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                CustomFormField(
+                  isLabelEnabled: false,
+                  controller: _hargaController,
+                  focusNode: widget.hargaFocusNode,
+                  keyboardType: TextInputType.number,
+                  inputAction: TextInputAction.next,
+                  validator: (value) => Validator.validateField(
+                    value: value,
+                  ),
+                  label: 'harga',
+                  hint: 'Masukkan harga obat',
+                ),
+                SizedBox(height: 10.0),
+                Text(
+                  'Stok Obat',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22.0,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                CustomFormField(
+                  isLabelEnabled: false,
+                  controller: _stokController,
+                  focusNode: widget.stokFocusNode,
+                  keyboardType: TextInputType.number,
+                  inputAction: TextInputAction.next,
+                  validator: (value) => Validator.validateField(
+                    value: value,
+                  ),
+                  label: 'stok',
+                  hint: 'Masukkan stok (jumlah) obat',
                 ),
               ],
             ),
@@ -133,8 +229,11 @@ class _EditItemFormState extends State<EditItemForm> {
                       ),
                     ),
                     onPressed: () async {
+                      widget.kodeFocusNode.unfocus();
                       widget.nameFocusNode.unfocus();
-                      widget.descriptionFocusNode.unfocus();
+                      widget.jenisFocusNode.unfocus();
+                      widget.hargaFocusNode.unfocus();
+                      widget.stokFocusNode.unfocus();
 
                       if (_editItemFormKey.currentState.validate()) {
                         setState(() {
@@ -143,8 +242,11 @@ class _EditItemFormState extends State<EditItemForm> {
 
                         await Database.updateItem(
                           docId: widget.documentId,
+                          kode: _kodeController.text,
                           name: _nameController.text,
-                          description: _descriptionController.text,
+                          jenis: _jenisController.text,
+                          harga: int.tryParse(_hargaController.text),
+                          stok: int.tryParse(_stokController.text),
                         );
 
                         setState(() {
