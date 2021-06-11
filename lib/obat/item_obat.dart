@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:projek_uas_apotek/widgets/side_bar.dart';
 import '/login/color.dart';
 import 'edit_obat.dart';
 import 'database.dart';
@@ -46,13 +47,14 @@ class ItemObat extends StatelessWidget {
                       ),
                     ),
                   ),
-                  leading: Image(image: NetworkImage("https://image.flaticon.com/icons/png/512/822/822092.png"),),
+                  leading: Image(image: NetworkImage("https://image.flaticon.com/icons/png/512/3140/3140341.png"),),
                   title: Text(
                     name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Jenis : " + jenis,

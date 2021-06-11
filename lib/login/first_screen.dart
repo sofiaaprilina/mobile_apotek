@@ -119,7 +119,7 @@ class FirstScreen extends StatelessWidget {
                                     image: NetworkImage("https://image.flaticon.com/icons/png/512/822/822092.png"),
                                     width: 100.0,
                                   ),
-                                  Text("Obat")
+                                  Text("Data Obat")
                                 ],),
                                 onTap: (){
                                   Navigator.of(context).push(
@@ -137,7 +137,7 @@ class FirstScreen extends StatelessWidget {
                                     image: NetworkImage("https://image.flaticon.com/icons/png/512/4521/4521052.png"),
                                     width: 100.0,
                                   ),
-                                  Text("Penjualan")
+                                  Text("Data Penjualan")
                                 ],),
                                 onTap: (){
                                   Navigator.of(context).push(

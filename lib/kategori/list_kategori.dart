@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projek_uas_apotek/widgets/side_bar.dart';
 import '/login/color.dart';
 import 'tambah_kategori.dart';
 import 'item_kategori.dart';
@@ -16,6 +17,7 @@ class _ListKategoriState extends State<ListKategori> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: SideBar(),
       backgroundColor: ColorPalette.primaryColor,
       appBar: AppBar(
         elevation: 0,

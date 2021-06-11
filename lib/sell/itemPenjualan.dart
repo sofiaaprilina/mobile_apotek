@@ -49,7 +49,7 @@ class ItemPenjualan extends StatelessWidget {
                       ),
                     ),
                   ),
-                  leading: Image(image: NetworkImage("https://image.flaticon.com/icons/png/512/822/822092.png"),),
+                  leading: Image(image: NetworkImage("https://image.flaticon.com/icons/png/512/994/994305.png"),),
                   title: Text(
                     kode,
                     maxLines: 1,

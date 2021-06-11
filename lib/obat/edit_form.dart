@@ -92,7 +92,7 @@ class _EditItemFormState extends State<EditItemForm> {
                   'Kode Obat',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 16.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
                   ),
@@ -115,7 +115,7 @@ class _EditItemFormState extends State<EditItemForm> {
                   'Nama Obat',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 16.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
                   ),
@@ -139,7 +139,7 @@ class _EditItemFormState extends State<EditItemForm> {
                   'Jenis Obat',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 16.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
                   ),
@@ -162,7 +162,7 @@ class _EditItemFormState extends State<EditItemForm> {
                   'Harga Obat',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 16.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
                   ),
@@ -185,7 +185,7 @@ class _EditItemFormState extends State<EditItemForm> {
                   'Stok Obat',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 16.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
                   ),

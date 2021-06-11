@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projek_uas_apotek/widgets/side_bar.dart';
 import '/login/color.dart';
 import 'tambah_penjualan.dart';
 import 'itemPenjualan.dart';
@@ -16,6 +17,7 @@ class _ListPenjualanState extends State<ListPenjualan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: SideBar(),
       backgroundColor: ColorPalette.primaryColor,
       appBar: AppBar(
         elevation: 0,
@@ -25,7 +27,7 @@ class _ListPenjualanState extends State<ListPenjualan> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Image(
-          image: NetworkImage("https://image.flaticon.com/icons/png/512/822/822092.png"),
+          image: NetworkImage("https://image.flaticon.com/icons/png/512/4521/4521052.png"),
           width: 25.0,
         ),
         SizedBox(width: 8),
