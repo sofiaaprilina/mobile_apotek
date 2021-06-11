@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projek_uas_apotek/obat/list_obat.dart';
-import 'package:projek_uas_apotek/pages/kategori.dart';
+import 'package:projek_uas_apotek/sell/list_penjualan.dart';
 import 'color.dart';
 import 'login_page.dart';
 import 'sign_in.dart';
@@ -137,9 +137,17 @@ class FirstScreen extends StatelessWidget {
                                     image: NetworkImage("https://image.flaticon.com/icons/png/512/4521/4521052.png"),
                                     width: 100.0,
                                   ),
-                                  Text("Pemesanan")
+                                  Text("Penjualan")
                                 ],),
-                                onTap: (){},
+                                onTap: (){
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return ListPenjualan();
+                                      },
+                                    ),
+                                  );
+                                },
                               ),
                               InkResponse(
                                 child: Column(children: [
