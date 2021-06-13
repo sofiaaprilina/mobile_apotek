@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:projek_uas_apotek/login/sign_in.dart';
 import '/login/color.dart';
 import 'database.dart';
 import '/utils/validator.dart';
@@ -54,6 +55,8 @@ class _EditItemFormState extends State<EditItemForm> {
   TextEditingController _jumlahController;
   TextEditingController _totalController;
 
+  var selectedCurrency;
+
   DateTime _dateTime = DateTime.now();
   _selectedTodoDate(BuildContext context) async{
     var _pickedDate = await showDatePicker(
@@ -105,20 +108,16 @@ class _EditItemFormState extends State<EditItemForm> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
-              bottom: 24.0,
-            ),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10.0),
+                SizedBox(height: 5.0),
                 Text(
                   'Kode Penjualan',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 16.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
                   ),
@@ -141,7 +140,7 @@ class _EditItemFormState extends State<EditItemForm> {
                   'Tanggal',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 16.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
                   ),
@@ -164,30 +163,57 @@ class _EditItemFormState extends State<EditItemForm> {
                   'Nama Obat',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 16.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(height: 10.0),
-                CustomFormField(
-                  isLabelEnabled: false,
-                  controller: _obatController,
-                  focusNode: widget.obatFocusNode,
-                  keyboardType: TextInputType.text,
-                  inputAction: TextInputAction.next,
-                  validator: (value) => Validator.validateField(
-                    value: value,
-                  ),
-                  label: 'obat',
-                  hint: 'Pilih obat',
-                ),
+                StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance.collection('apotek').doc(userUid).collection('obat').snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData)
+                        const Text("Loading");
+                      else {
+                        var length = snapshot.data.docs.length;
+                        DocumentSnapshot ds = snapshot.data.docs[length - 1];
+                        var _queryCat = snapshot.data.docs;
+                        return new Container(
+                          child: new Row(
+                            children: <Widget>[
+                              new Expanded(
+                                flex: 1,
+                                child: DropdownButton<String>(
+                                  value: _obatController.text,
+                                  isDense: true,
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      selectedCurrency = newValue;
+                                      _obatController.text = selectedCurrency;
+                                      print(selectedCurrency);
+                                    });
+                                  },
+                                  items: snapshot.data.docs.map((DocumentSnapshot document) {
+                                    return new DropdownMenuItem<String>(
+                                      value: document['name'],
+                                      child: new Container(
+                                      height: 20.0,
+                                      child: new Text( document['name'], style: TextStyle(fontSize: 16.0),),
+                                    ));
+                                  }).toList(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                 }),
                 SizedBox(height: 10.0),
                 Text(
                   'price',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 16.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
                   ),
@@ -210,7 +236,7 @@ class _EditItemFormState extends State<EditItemForm> {
                   'Jumlah',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 16.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
                   ),
@@ -233,7 +259,7 @@ class _EditItemFormState extends State<EditItemForm> {
           ),
           _isProcessing
               ? Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
                       ColorPalette.primaryColor,
@@ -266,7 +292,7 @@ class _EditItemFormState extends State<EditItemForm> {
                           _isProcessing = true;
                         });
 
-                        await Database.updateItem(
+                        await DatabaseP.updateItem(
                           docId: widget.documentId,
                           kode: _kodeController.text,
                           tanggal: Timestamp.fromDate(_dateTime),
@@ -288,7 +314,7 @@ class _EditItemFormState extends State<EditItemForm> {
                       child: Text(
                         'UPDATE ITEM',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           letterSpacing: 2,

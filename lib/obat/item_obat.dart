@@ -9,7 +9,7 @@ class ItemObat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Database.readItems(),
+      stream: DatabaseO.readItems(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Something went wrong');
@@ -57,7 +57,7 @@ class ItemObat extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Jenis : " + jenis,
+                        "Jenis  : " + jenis,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -67,7 +67,7 @@ class ItemObat extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        "Stok : " + stok.toString(),
+                        "Stok    : " + stok.toString(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

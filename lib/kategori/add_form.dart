@@ -7,11 +7,11 @@ import 'custom_form_field.dart';
 
 class AddForm extends StatefulWidget {
   final FocusNode nameFocusNode;
-  final FocusNode descriptionFocusNode;
+  final FocusNode kodeFocusNode;
 
   const AddForm({
     this.nameFocusNode,
-    this.descriptionFocusNode,
+    this.kodeFocusNode,
   });
 
   @override
@@ -24,7 +24,7 @@ class _AddFormState extends State<AddForm> {
   bool _isProcessing = false;
 
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _kodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +43,34 @@ class _AddFormState extends State<AddForm> {
               children: [
                 SizedBox(height: 24.0),
                 Text(
+                  'Kode Kategori',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                CustomFormField(
+                  maxLines: 1,
+                  isLabelEnabled: false,
+                  controller: _kodeController,
+                  focusNode: widget.kodeFocusNode,
+                  keyboardType: TextInputType.text,
+                  inputAction: TextInputAction.done,
+                  validator: (value) => Validator.validateField(
+                    value: value,
+                  ),
+                  label: 'Kode',
+                  hint: 'Masukkan kode kategori',
+                ),
+                SizedBox(height: 24.0),
+                Text(
                   'Nama Kategori',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 16.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
                   ),
@@ -62,31 +86,7 @@ class _AddFormState extends State<AddForm> {
                     value: value,
                   ),
                   label: 'name',
-                  hint: 'Enter name category here',
-                ),
-                SizedBox(height: 24.0),
-                Text(
-                  'Deskripsi',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22.0,
-                    letterSpacing: 1,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 8.0),
-                CustomFormField(
-                  maxLines: 10,
-                  isLabelEnabled: false,
-                  controller: _descriptionController,
-                  focusNode: widget.descriptionFocusNode,
-                  keyboardType: TextInputType.text,
-                  inputAction: TextInputAction.done,
-                  validator: (value) => Validator.validateField(
-                    value: value,
-                  ),
-                  label: 'Description',
-                  hint: 'Enter description of category here',
+                  hint: 'Masukkan nama kategori',
                 ),
               ],
             ),
@@ -114,8 +114,8 @@ class _AddFormState extends State<AddForm> {
                       ),
                     ),
                     onPressed: () async {
+                      widget.kodeFocusNode.unfocus();
                       widget.nameFocusNode.unfocus();
-                      widget.descriptionFocusNode.unfocus();
 
                       if (_addItemFormKey.currentState.validate()) {
                         setState(() {
@@ -123,8 +123,8 @@ class _AddFormState extends State<AddForm> {
                         });
 
                         await Database.addItem(
+                          kode: _kodeController.text,
                           name: _nameController.text,
-                          description: _descriptionController.text,
                         );
 
                         setState(() {
@@ -139,7 +139,7 @@ class _AddFormState extends State<AddForm> {
                       child: Text(
                         'Tambah Kategori',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           letterSpacing: 2,

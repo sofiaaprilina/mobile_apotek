@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import '/login/color.dart';
 import 'edit_screen.dart';
 import 'database.dart';
-import 'package:intl/intl.dart';
 
 class ItemPenjualan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Database.readItems(),
+      stream: DatabaseP.readItems(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Something went wrong');
@@ -70,17 +69,17 @@ class ItemPenjualan extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        "Harga : " + price.toString(),
+                        "Harga    : " + price.toString(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        "Jumlah : " + jumlah.toString(),
+                        "Jumlah  : " + jumlah.toString(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        "Total : " + total.toString(),
+                        "Total      : " + total.toString(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

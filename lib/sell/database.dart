@@ -2,20 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projek_uas_apotek/login/sign_in.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-final CollectionReference _mainCollection = _firestore.collection('penjualan');
-
-class Database {
+final CollectionReference _mainCollection = _firestore.collection('apotek');
+int jumlah;
+class DatabaseP {
 //Tambah Data Obat
   static Future<void> addItem({
     String kode,
     Timestamp tanggal,
     String obat,
     int price,
-    int jumlah,
+    jumlah,
     int total,
   }) async {
     DocumentReference documentReferencer =
-        _mainCollection.doc(userUid).collection('items').doc();
+        _mainCollection.doc(userUid).collection('penjualan').doc();
   
     Map<String, dynamic> data = <String, dynamic>{
       "kode": kode,
@@ -25,7 +25,7 @@ class Database {
       "jumlah": jumlah,
       "total": total,
     };
-
+    
     await documentReferencer
         .set(data)
         .whenComplete(() => print("Data Penjualan berhasil ditambahkan"))
@@ -37,12 +37,12 @@ class Database {
     Timestamp tanggal,
     String obat,
     int price,
-    int jumlah,
+    jumlah,
     int total,
     String docId,
   }) async {
     DocumentReference documentReferencer =
-        _mainCollection.doc(userUid).collection('items').doc(docId);
+        _mainCollection.doc(userUid).collection('penjualan').doc(docId);
    
     Map<String, dynamic> data = <String, dynamic>{
       "kode": kode,
@@ -52,7 +52,7 @@ class Database {
       "jumlah": jumlah,
       "total": total,
     };
-
+    
     await documentReferencer
         .update(data)
         .whenComplete(() => print("Data Penjualan berhasil diupdate"))
@@ -61,7 +61,7 @@ class Database {
 
   static Stream<QuerySnapshot> readItems() {
     CollectionReference notesItemCollection =
-        _mainCollection.doc(userUid).collection('items');
+        _mainCollection.doc(userUid).collection('penjualan');
 
     return notesItemCollection.snapshots();
   }
@@ -70,7 +70,7 @@ class Database {
     String docId,
   }) async {
     DocumentReference documentReferencer =
-        _mainCollection.doc(userUid).collection('items').doc(docId);
+        _mainCollection.doc(userUid).collection('penjualan').doc(docId);
 
     await documentReferencer
         .delete()

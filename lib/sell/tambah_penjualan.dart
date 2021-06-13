@@ -32,7 +32,7 @@ class TambahPenjualan extends StatelessWidget {
       children: [
         Image(
               image: NetworkImage(
-                  "https://image.flaticon.com/icons/png/512/822/822092.png"),
+                  "https://image.flaticon.com/icons/png/512/4521/4521052.png"),
               width: 25.0,
             ),
         SizedBox(width: 8),

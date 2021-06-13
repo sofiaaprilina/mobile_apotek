@@ -19,8 +19,8 @@ class ItemKategori extends StatelessWidget {
             itemBuilder: (context, index) {
               var noteInfo = snapshot.data.docs[index].data();
               String docID = snapshot.data.docs[index].id;
+              String kode = noteInfo['kode'];
               String name = noteInfo['name'];
-              String description = noteInfo['description'];
 
               return Ink(
                 decoration: BoxDecoration(
@@ -34,20 +34,20 @@ class ItemKategori extends StatelessWidget {
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => EditScreen(
+                        currentKode: kode,
                         currentName: name,
-                        currentDescription: description,
                         documentId: docID,
                       ),
                     ),
                   ),
                   leading: Image(image: NetworkImage("https://image.flaticon.com/icons/png/512/914/914832.png"),),
                   title: Text(
-                    name,
+                    kode,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: Text(
-                    description,
+                    name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

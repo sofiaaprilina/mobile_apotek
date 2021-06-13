@@ -4,13 +4,13 @@ import 'database.dart';
 import 'edit_form.dart';
 
 class EditScreen extends StatefulWidget {
+  final String currentKode;
   final String currentName;
-  final String currentDescription;
   final String documentId;
 
   EditScreen({
+    this.currentKode,
     this.currentName,
-    this.currentDescription,
     this.documentId,
   });
 
@@ -19,9 +19,8 @@ class EditScreen extends StatefulWidget {
 }
 
 class _EditScreenState extends State<EditScreen> {
+  final FocusNode _kodeFocusNode = FocusNode();
   final FocusNode _nameFocusNode = FocusNode();
-
-  final FocusNode _descriptionFocusNode = FocusNode();
 
   bool _isDeleting = false;
 
@@ -29,8 +28,8 @@ class _EditScreenState extends State<EditScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        _kodeFocusNode.unfocus();
         _nameFocusNode.unfocus();
-        _descriptionFocusNode.unfocus();
       },
       child: Scaffold(
         backgroundColor: ColorPalette.primaryDarkColor,
@@ -104,10 +103,10 @@ class _EditScreenState extends State<EditScreen> {
             ),
             child: EditItemForm(
               documentId: widget.documentId,
+              kodeFocusNode: _kodeFocusNode,
               nameFocusNode: _nameFocusNode,
-              descriptionFocusNode: _descriptionFocusNode,
+              currentKode: widget.currentKode,
               currentName: widget.currentName,
-              currentDescription: widget.currentDescription,
             ),
           ),
         ),

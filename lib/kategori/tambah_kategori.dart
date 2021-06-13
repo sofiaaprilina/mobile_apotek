@@ -3,15 +3,15 @@ import '/login/color.dart';
 import 'add_form.dart';
 
 class TambahKategori extends StatelessWidget {
+  final FocusNode _kodeFocusNode = FocusNode();
   final FocusNode _nameFocusNode = FocusNode();
-  final FocusNode _descriptionFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        _kodeFocusNode.unfocus();
         _nameFocusNode.unfocus();
-        _descriptionFocusNode.unfocus();
       },
       child: Scaffold(
         backgroundColor: ColorPalette.primaryDarkColor,
@@ -46,8 +46,8 @@ class TambahKategori extends StatelessWidget {
               bottom: 20.0,
             ),
             child: AddForm(
+              kodeFocusNode: _kodeFocusNode,
               nameFocusNode: _nameFocusNode,
-              descriptionFocusNode: _descriptionFocusNode,
             ),
           ),
         ),

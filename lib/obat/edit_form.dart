@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:projek_uas_apotek/login/sign_in.dart';
 
 import '/login/color.dart';
 import 'database.dart';
@@ -47,6 +49,8 @@ class _EditItemFormState extends State<EditItemForm> {
   TextEditingController _jenisController;
   TextEditingController _hargaController;
   TextEditingController _stokController;
+
+  var selectedCurrency;
 
   @override
   void initState() {
@@ -144,19 +148,46 @@ class _EditItemFormState extends State<EditItemForm> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 10.0),
-                CustomFormField(
-                  isLabelEnabled: false,
-                  controller: _jenisController,
-                  focusNode: widget.jenisFocusNode,
-                  keyboardType: TextInputType.text,
-                  inputAction: TextInputAction.next,
-                  validator: (value) => Validator.validateField(
-                    value: value,
-                  ),
-                  label: 'jenis',
-                  hint: 'Pilih jenis obat',
-                ),
+                SizedBox(height: 8.0),
+                StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance.collection('apotek').doc(userUid).collection('kategori').snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData)
+                          const Text("Loading");
+                        else {
+                          var length = snapshot.data.docs.length;
+                          DocumentSnapshot ds = snapshot.data.docs[length - 1];
+                          var _queryCat = snapshot.data.docs;
+                          return new Container(
+                            child: new Row(
+                              children: <Widget>[
+                                new Expanded(
+                                  flex: 1,
+                                  child: DropdownButton<String>(
+                                    // hint: Text("---Pilih Jenis Obat---", style: TextStyle(color: ColorPalette.hintColor),),
+                                      value: _jenisController.text,
+                                      isDense: true,
+                                      onChanged: (String newValue) {
+                                        setState(() {
+                                          _jenisController.text = newValue;
+                                          print(selectedCurrency);
+                                        });
+                                      },
+                                      items: snapshot.data.docs.map((DocumentSnapshot document) {
+                                        return new DropdownMenuItem<String>(
+                                          value: document['name'],
+                                          child: new Container(
+                                          height: 30.0,
+                                          child: new Text( document['name'], style: TextStyle(fontSize: 16.0),),
+                                        ));
+                                      }).toList(),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          );
+                        }
+                    }),
                 SizedBox(height: 10.0),
                 Text(
                   'Harga Obat',
@@ -240,7 +271,7 @@ class _EditItemFormState extends State<EditItemForm> {
                           _isProcessing = true;
                         });
 
-                        await Database.updateItem(
+                        await DatabaseO.updateItem(
                           docId: widget.documentId,
                           kode: _kodeController.text,
                           name: _nameController.text,

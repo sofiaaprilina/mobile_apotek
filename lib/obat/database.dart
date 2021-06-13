@@ -2,19 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projek_uas_apotek/login/sign_in.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-final CollectionReference _mainCollection = _firestore.collection('obat');
-
-class Database {
+final CollectionReference _mainCollection = _firestore.collection('apotek');
+int stok;
+class DatabaseO {
 //Tambah Data Obat
   static Future<void> addItem({
     String kode,
     String name,
     String jenis,
     int harga,
-    int stok,
+    stok,
   }) async {
     DocumentReference documentReferencer =
-        _mainCollection.doc(userUid).collection('items').doc();
+        _mainCollection.doc(userUid).collection('obat').doc();
 
     Map<String, dynamic> data = <String, dynamic>{
       "kode": kode,
@@ -35,11 +35,11 @@ class Database {
     String name,
     String jenis,
     int harga,
-    int stok,
+    stok,
     String docId,
   }) async {
     DocumentReference documentReferencer =
-        _mainCollection.doc(userUid).collection('items').doc(docId);
+        _mainCollection.doc(userUid).collection('obat').doc(docId);
 
     Map<String, dynamic> data = <String, dynamic>{
       "kode": kode,
@@ -57,7 +57,7 @@ class Database {
 
   static Stream<QuerySnapshot> readItems() {
     CollectionReference notesItemCollection =
-        _mainCollection.doc(userUid).collection('items');
+        _mainCollection.doc(userUid).collection('obat');
 
     return notesItemCollection.snapshots();
   }
@@ -66,7 +66,7 @@ class Database {
     String docId,
   }) async {
     DocumentReference documentReferencer =
-        _mainCollection.doc(userUid).collection('items').doc(docId);
+        _mainCollection.doc(userUid).collection('obat').doc(docId);
 
     await documentReferencer
         .delete()

@@ -7,17 +7,17 @@ import '/utils/validator.dart';
 import 'custom_form_field.dart';
 
 class EditItemForm extends StatefulWidget {
+  final FocusNode kodeFocusNode;
   final FocusNode nameFocusNode;
-  final FocusNode descriptionFocusNode;
+  final String currentKode;
   final String currentName;
-  final String currentDescription;
   final String documentId;
 
   const EditItemForm({
+    this.kodeFocusNode,
     this.nameFocusNode,
-    this.descriptionFocusNode,
+    this.currentKode,
     this.currentName,
-    this.currentDescription,
     this.documentId,
   });
 
@@ -30,18 +30,19 @@ class _EditItemFormState extends State<EditItemForm> {
 
   bool _isProcessing = false;
 
+  TextEditingController _kodeController;
   TextEditingController _nameController;
-  TextEditingController _descriptionController;
 
   @override
   void initState() {
+    _kodeController = TextEditingController(
+      text: widget.currentKode,
+    );
+
     _nameController = TextEditingController(
       text: widget.currentName,
     );
 
-    _descriptionController = TextEditingController(
-      text: widget.currentDescription,
-    );
     super.initState();
   }
 
@@ -62,10 +63,34 @@ class _EditItemFormState extends State<EditItemForm> {
               children: [
                 SizedBox(height: 24.0),
                 Text(
+                  'Kode',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                CustomFormField(
+                  maxLines: 1,
+                  isLabelEnabled: false,
+                  controller: _kodeController,
+                  focusNode: widget.kodeFocusNode,
+                  keyboardType: TextInputType.text,
+                  inputAction: TextInputAction.done,
+                  validator: (value) => Validator.validateField(
+                    value: value,
+                  ),
+                  label: 'Kode',
+                  hint: 'Masukkan kode kategori',
+                ),
+                SizedBox(height: 24.0),
+                Text(
                   'Nama Kategori',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 16.0,
                     letterSpacing: 1,
                     fontWeight: FontWeight.bold,
                   ),
@@ -81,31 +106,7 @@ class _EditItemFormState extends State<EditItemForm> {
                     value: value,
                   ),
                   label: 'name',
-                  hint: 'Enter your category name',
-                ),
-                SizedBox(height: 24.0),
-                Text(
-                  'Deskripsi',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22.0,
-                    letterSpacing: 1,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 8.0),
-                CustomFormField(
-                  maxLines: 10,
-                  isLabelEnabled: false,
-                  controller: _descriptionController,
-                  focusNode: widget.descriptionFocusNode,
-                  keyboardType: TextInputType.text,
-                  inputAction: TextInputAction.done,
-                  validator: (value) => Validator.validateField(
-                    value: value,
-                  ),
-                  label: 'Description',
-                  hint: 'Enter your note description',
+                  hint: 'Masukkkan nama kategori',
                 ),
               ],
             ),
@@ -133,8 +134,8 @@ class _EditItemFormState extends State<EditItemForm> {
                       ),
                     ),
                     onPressed: () async {
+                      widget.kodeFocusNode.unfocus();
                       widget.nameFocusNode.unfocus();
-                      widget.descriptionFocusNode.unfocus();
 
                       if (_editItemFormKey.currentState.validate()) {
                         setState(() {
@@ -143,8 +144,8 @@ class _EditItemFormState extends State<EditItemForm> {
 
                         await Database.updateItem(
                           docId: widget.documentId,
+                          kode: _kodeController.text,
                           name: _nameController.text,
-                          description: _descriptionController.text,
                         );
 
                         setState(() {
@@ -159,7 +160,7 @@ class _EditItemFormState extends State<EditItemForm> {
                       child: Text(
                         'UPDATE ITEM',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           letterSpacing: 2,
