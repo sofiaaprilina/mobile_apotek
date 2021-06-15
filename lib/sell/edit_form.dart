@@ -54,8 +54,10 @@ class _EditItemFormState extends State<EditItemForm> {
   TextEditingController _priceController;
   TextEditingController _jumlahController;
   TextEditingController _totalController;
+  final TextEditingController idObatController = TextEditingController();
 
   var selectedCurrency;
+  num stok;
 
   DateTime _dateTime = DateTime.now();
   _selectedTodoDate(BuildContext context) async{
@@ -190,6 +192,7 @@ class _EditItemFormState extends State<EditItemForm> {
                                     setState(() {
                                       selectedCurrency = newValue;
                                       _obatController.text = selectedCurrency;
+                                      idObatController.text = ds.id;
                                       print(selectedCurrency);
                                     });
                                   },
@@ -199,7 +202,13 @@ class _EditItemFormState extends State<EditItemForm> {
                                       child: new Container(
                                       height: 20.0,
                                       child: new Text( document['name'], style: TextStyle(fontSize: 16.0),),
-                                    ));
+                                    ),
+                                    onTap: (){
+                                      setState(() {
+                                        stok = document['stok'];
+                                      });
+                                    },
+                                    );
                                   }).toList(),
                                 ),
                               ),
@@ -301,6 +310,18 @@ class _EditItemFormState extends State<EditItemForm> {
                           jumlah: int.tryParse(_jumlahController.text),
                           total: int.tryParse(_priceController.text) * int.tryParse(_jumlahController.text),
                         );
+
+                        
+                            jumlah = int.tryParse(_jumlahController.text);
+                          if (jumlah == jumlah) {
+                            await FirebaseFirestore.instance.collection('apotek').doc(userUid).collection('obat').doc(idObatController.text).update({
+                              "stok": stok
+                            });
+                          } else{
+                            await FirebaseFirestore.instance.collection('apotek').doc(userUid).collection('obat').doc(idObatController.text).update({
+                              "stok": stok - jumlah
+                            });
+                          }
 
                         setState(() {
                           _isProcessing = false;

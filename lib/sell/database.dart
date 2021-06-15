@@ -63,7 +63,7 @@ class DatabaseP {
     CollectionReference notesItemCollection =
         _mainCollection.doc(userUid).collection('penjualan');
 
-    return notesItemCollection.snapshots();
+    return notesItemCollection.orderBy('kode').snapshots();
   }
 //hapus Data Obat
   static Future<void> deleteItem({

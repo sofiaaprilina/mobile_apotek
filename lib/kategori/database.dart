@@ -47,7 +47,7 @@ class Database {
     CollectionReference notesItemCollection =
         _mainCollection.doc(userUid).collection('kategori');
 
-    return notesItemCollection.snapshots();
+    return notesItemCollection.orderBy('kode').snapshots();
   }
 //hapus kategori
   static Future<void> deleteItem({

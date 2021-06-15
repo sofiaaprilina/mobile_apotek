@@ -3,7 +3,7 @@ import 'package:projek_uas_apotek/login/sign_in.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _mainCollection = _firestore.collection('apotek');
-int stok;
+
 class DatabaseO {
 //Tambah Data Obat
   static Future<void> addItem({
@@ -11,7 +11,7 @@ class DatabaseO {
     String name,
     String jenis,
     int harga,
-    stok,
+    int stok,
   }) async {
     DocumentReference documentReferencer =
         _mainCollection.doc(userUid).collection('obat').doc();
@@ -23,7 +23,7 @@ class DatabaseO {
       "harga": harga,
       "stok": stok,
     };
-
+stok = stok;
     await documentReferencer
         .set(data)
         .whenComplete(() => print("Data Obat berhasil ditambahkan"))
@@ -35,7 +35,7 @@ class DatabaseO {
     String name,
     String jenis,
     int harga,
-    stok,
+    int stok,
     String docId,
   }) async {
     DocumentReference documentReferencer =
@@ -59,7 +59,7 @@ class DatabaseO {
     CollectionReference notesItemCollection =
         _mainCollection.doc(userUid).collection('obat');
 
-    return notesItemCollection.snapshots();
+    return notesItemCollection.orderBy('name').snapshots();
   }
 //hapus Data Obat
   static Future<void> deleteItem({

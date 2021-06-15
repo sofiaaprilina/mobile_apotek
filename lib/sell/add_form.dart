@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:projek_uas_apotek/login/sign_in.dart';
-import 'package:projek_uas_apotek/obat/database.dart';
 import '/login/color.dart';
 import 'database.dart';
 import '/utils/validator.dart';
@@ -52,12 +51,14 @@ class _AddFormState extends State<AddForm> {
   }
 
   var selectedCurrency;
+  num stok;
 
   final TextEditingController _kodeController = TextEditingController();
   final TextEditingController _tanggalController = TextEditingController();
   final TextEditingController _obatController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _jumlahController = TextEditingController();
+  final TextEditingController idObatController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -149,6 +150,7 @@ class _AddFormState extends State<AddForm> {
                                     setState(() {
                                       selectedCurrency = newValue;
                                       _obatController.text = selectedCurrency;
+                                      idObatController.text = ds.id;
                                       print(selectedCurrency);
                                     });
                                   },
@@ -158,7 +160,13 @@ class _AddFormState extends State<AddForm> {
                                       child: new Container(
                                       height: 20.0,
                                       child: new Text( document['name'], style: TextStyle(fontSize: 16.0),),
-                                    ));
+                                    ),
+                                    onTap: (){
+                                      setState(() {
+                                        stok = document['stok'];
+                                      });
+                                    },
+                                    );
                                   }).toList(),
                                 ),
                               ),
@@ -261,7 +269,12 @@ class _AddFormState extends State<AddForm> {
                             jumlah: int.tryParse(_jumlahController.text),
                             total: int.tryParse(_priceController.text) * int.tryParse(_jumlahController.text),
                           );
-
+                          jumlah = int.tryParse(_jumlahController.text);
+                          if (_jumlahController.text != null) {
+                            await FirebaseFirestore.instance.collection('apotek').doc(userUid).collection('obat').doc(idObatController.text).update({
+                              "stok": stok - jumlah
+                            });
+                          }
                           setState(() {
                             _isProcessing = false;
                           });
