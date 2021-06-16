@@ -14,7 +14,12 @@ class RegisterPage extends StatelessWidget {
       //   title: Text('Sign Up with Email'),
       // ),
       body: Container(
-        color: ColorPalette.primaryColor,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage('https://image.freepik.com/free-vector/gradient-purple-hexagonal-background_23-2148965956.jpg'),
+            fit: BoxFit.cover  
+          )
+        ),
         padding: EdgeInsets.all(20.0),
         child: ListView(
           children: <Widget>[

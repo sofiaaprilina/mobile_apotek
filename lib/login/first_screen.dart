@@ -58,7 +58,10 @@ class FirstScreen extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  image: DecorationImage(
+                    image: NetworkImage('https://image.freepik.com/free-vector/pastel-pink-purple-gradient-blur-background_53876-98034.jpg'),
+                    fit: BoxFit.cover  
+                  ),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(60),
                     topRight: Radius.circular(60))),

@@ -17,7 +17,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: ColorPalette.primaryColor,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage('https://image.freepik.com/free-vector/purple-dynamic-background_23-2148962174.jpg'),
+            fit: BoxFit.cover  
+          )
+        ),
         padding: EdgeInsets.all(20.0),
         child: ListView(
           children: <Widget>[
