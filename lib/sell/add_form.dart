@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:projek_uas_apotek/login/sign_in.dart';
+import 'package:projek_uas_apotek/obat/database.dart';
 import '/login/color.dart';
 import 'database.dart';
 import '/utils/validator.dart';
@@ -50,7 +51,7 @@ class _AddFormState extends State<AddForm> {
     }
   }
 
-  var selectedCurrency;
+  var selectedCurrency, selectedPrice;
   num stok;
 
   final TextEditingController _kodeController = TextEditingController();
@@ -105,12 +106,11 @@ class _AddFormState extends State<AddForm> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10.0),
                   TextField(
                     controller: _tanggalController,
                     decoration: InputDecoration(
-                      labelText: 'Tanggal',
-                      hintText: '---Pilih Tanggal---',
+                      labelText: 'Masukkan Tanggal',
+                      hintText: 'Pilih Tanggal',
                       prefixIcon: InkWell(
                         onTap: (){ _selectedTodoDate(context);},
                         child: Icon(Icons.calendar_today),
@@ -136,21 +136,25 @@ class _AddFormState extends State<AddForm> {
                       else {
                         var length = snapshot.data.docs.length;
                         DocumentSnapshot ds = snapshot.data.docs[length - 1];
-                        var _queryCat = snapshot.data.docs;
                         return new Container(
                           child: new Row(
                             children: <Widget>[
                               new Expanded(
                                 flex: 1,
                                 child: DropdownButton<String>(
-                                  hint: Text("---Pilih Obat---", style: TextStyle(color: ColorPalette.hintColor),),
+                                  hint: Row(
+                                    children: [
+                                      Text("Pilih Obat", style: TextStyle(color: ColorPalette.hintColor),),
+                                      SizedBox(width: 230,)
+                                    ],
+                                  ),
                                   value: selectedCurrency,
                                   isDense: true,
                                   onChanged: (String newValue) {
                                     setState(() {
                                       selectedCurrency = newValue;
                                       _obatController.text = selectedCurrency;
-                                      idObatController.text = ds.id;
+                                      // idObatController.text = ds['name'].id;
                                       print(selectedCurrency);
                                     });
                                   },
@@ -161,11 +165,11 @@ class _AddFormState extends State<AddForm> {
                                       height: 20.0,
                                       child: new Text( document['name'], style: TextStyle(fontSize: 16.0),),
                                     ),
-                                    onTap: (){
-                                      setState(() {
-                                        stok = document['stok'];
-                                      });
-                                    },
+                                    // onTap: (){
+                                    //   setState(() {
+                                    //     stok = document['stok'];
+                                    //   });
+                                    // },
                                     );
                                   }).toList(),
                                 ),
@@ -175,7 +179,7 @@ class _AddFormState extends State<AddForm> {
                         );
                       }
                   }),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 12.0),
                   Text(
                     'Harga',
                     style: TextStyle(
@@ -185,18 +189,59 @@ class _AddFormState extends State<AddForm> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10.0),
-                  CustomFormField(
-                    isLabelEnabled: false,
-                    controller: _priceController,
-                    focusNode: widget.priceFocusNode,
-                    keyboardType: TextInputType.number,
-                    inputAction: TextInputAction.next,
-                    validator: (value) => Validator.validateField(
-                      value: value,
+                  Container(
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: DatabaseO.readItems(),
+                      builder: (context, snapshot){
+                        if(!snapshot.hasData){
+                          const Text("Loading");
+                        } else{
+                          var snap;
+                          List<DropdownMenuItem> currencyPrice = [];
+                          for(int i=0; i<snapshot.data.docs.length; i++){
+                            snap = snapshot.data.docs[i];
+                            int harga = snap['harga'];
+                            String name = snap['name'];
+                            stok = snap['stok'];
+                            currencyPrice.add(
+                              DropdownMenuItem(child: Text(name +" "+harga.toString()),
+                                value: "${harga}",
+                              ), 
+                            );
+                          }
+                          return Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: DropdownButton(
+                                  hint: Row(
+                                    children: [
+                                      Text('Pilih Harga', style: TextStyle(color: ColorPalette.hintColor,),),
+                                      SizedBox(width: 220,)
+                                    ],
+                                  ),
+                                  focusNode: widget.priceFocusNode,
+                                  items: currencyPrice,
+                                  onChanged: (newValue){
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                        newValue, style: TextStyle(color: ColorPalette.hintColor),
+                                      ),
+                                    );
+                                    Scaffold.of(context).showSnackBar(snackBar);
+                                    setState(() {
+                                      selectedPrice = newValue;
+                                      _priceController.text = selectedPrice;
+                                      idObatController.text = snap.id;
+                                    });
+                                  },
+                                  value: selectedPrice,
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                      }
                     ),
-                    label: 'price',
-                    hint: 'Masukkan harga obat',
                   ),
                   SizedBox(height: 10.0),
                   Text(
